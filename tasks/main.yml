@@ -1,13 +1,15 @@
 ---
 - block:
   # Install RedHat-like
-  - include: RedHat.yml
+  - include_tasks: RedHat.yml
     when: ansible_os_family == 'RedHat'
 
   # Install Debian-like
-  - include: Debian.yml
+  - include_tasks: Debian.yml
     when: ansible_os_family == 'Debian'
   when: nessus_install
+  become: yes
+
 
 - block:
   - name: Check agent link status
@@ -33,4 +35,6 @@
       state: started
       enabled: yes
     become: yes
-  when: nessus_manage
+  when:
+    - nessus_manage
+    - "'unset' not in nessus_agent_key"
