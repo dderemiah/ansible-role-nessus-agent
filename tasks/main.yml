@@ -3,7 +3,7 @@
   # Install RedHat-like
   - include: RedHat.yml
     when: ansible_os_family == 'RedHat'
-  
+
   # Install Debian-like
   - include: Debian.yml
     when: ansible_os_family == 'Debian'
@@ -21,8 +21,7 @@
     command: >
         /opt/nessus_agent/sbin/nessuscli agent link
         --key={{nessus_agent_key}}
-        --host={{nessus_agent_host}}
-        --port={{nessus_agent_port}}
+        --cloud
         --groups="{{nessus_agent_group}}"
     become: yes
     when: nessus_link is failed
